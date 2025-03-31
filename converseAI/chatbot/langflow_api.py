@@ -11,21 +11,19 @@ except ImportError:
     upload_file = None
 
 BASE_API_URL = "http://127.0.0.1:7860"
-FLOW_ID = "bba7db1e-fe4c-4165-8e9a-cbb648f66351"
+FLOW_ID = "a7f94076-9083-4974-81eb-3ee4a0d3a1b3"
 ENDPOINT = "" # You can set a specific endpoint name in the flow settings
 
 # You can tweak the flow by adding a tweaks dictionary
 # e.g {"OpenAI-XXXXX": {"model_name": "gpt-4"}}
 TWEAKS = {
-  "OllamaEmbeddings-btGc1": {},
-  "Chroma-9GLSk": {},
-  "ChatInput-NiJRx": {},
-  "Prompt-ggeaN": {},
-  "ParseData-rIyAy": {},
-  "OllamaModel-R3VLD": {},
-  "ChatOutput-tdsTh": {},
-  "File-RcynG": {},
-  "SplitText-6Amjm": {}
+  "ChatInput-0d0eD": {},
+  "OllamaEmbeddings-X7kjg": {},
+  "Chroma-GRSws": {},
+  "ParseData-oFZNM": {},
+  "Prompt-099dQ": {},
+  "OllamaModel-6DE9j": {},
+  "ChatOutput-wWxQp": {}
 }
 
 def run_flow(message: str,

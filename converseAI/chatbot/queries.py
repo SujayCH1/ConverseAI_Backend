@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from supabaseClient import supabaseInst
 from .langflow_api import run_flow  
 
-FLOW_ID = "bba7db1e-fe4c-4165-8e9a-cbb648f66351"
+FLOW_ID = "a7f94076-9083-4974-81eb-3ee4a0d3a1b3"
 
 def process_business_query(business_id, user_query):
     try:
@@ -12,7 +12,7 @@ def process_business_query(business_id, user_query):
             return JsonResponse({"error": "Collection name not found for business_id"}, status=400)
 
         collection_name = response.data[0]['collection_name']
-        tweaks = {"Chroma-9GLSk": {"collection_name": collection_name}}
+        tweaks = {"Chroma-GRSws": {"collection_name": collection_name}}
         
         response = run_flow(message=user_query, endpoint=FLOW_ID, tweaks=tweaks)
         

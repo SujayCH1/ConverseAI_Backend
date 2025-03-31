@@ -13,10 +13,12 @@ client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
 embedding_model = OllamaEmbeddings(model="nomic-embed-text")
 
 def create_chroma_collection(collection_name: str):
+    if collection_name in [col.name for col in client.list_collections()]:
+        return client.get_collection(collection_name)
     return client.create_collection(collection_name)
 
 def embed_document(document_text: str) -> list[np.ndarray]:
-    return embedding_model.embed_query(document_text)  
+    return embedding_model.embed_query(document_text)
 
 def chunk_document(document_text: str, chunk_size: int = 600, overlap: int = 100):
     return [document_text[i:i + chunk_size] for i in range(0, len(document_text), chunk_size - overlap)]
