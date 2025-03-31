@@ -1,0 +1,5 @@
+.env
+env
+RAG_Chatbot.ipynb
+converseAI/supabaseClient.py
+chroma_db
