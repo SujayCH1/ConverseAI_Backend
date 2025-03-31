@@ -3,3 +3,4 @@ env
 RAG_Chatbot.ipynb
 converseAI/supabaseClient.py
 chroma_db
+converseAI/__pycache__
