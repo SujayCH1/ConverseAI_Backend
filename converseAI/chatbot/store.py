@@ -39,10 +39,8 @@ def store_document_in_chroma(collection_name: str, document_text: str):
 def add_business(business_name, business_info):
     try:
         business_id = str(uuid.uuid4())
-        # Use isoformat() to convert the datetime object to string
         created_at = datetime.now().isoformat()  
         
-        # Insert business data
         supabaseInst.table('businesses').insert({
             'id': business_id,
             'name': business_name,
@@ -50,12 +48,11 @@ def add_business(business_name, business_info):
         }).execute()
 
         collection_name = f"collection_{business_id}"
-        # Insert business document with formatted datetime
         supabaseInst.table('business_documents').insert({
             'business_id': business_id,
             'document_text': business_info,
             'collection_name': collection_name,
-            'created_at': created_at  # Also format created_at here
+            'created_at': created_at 
         }).execute()
 
         chunks_stored = store_document_in_chroma(collection_name, business_info)

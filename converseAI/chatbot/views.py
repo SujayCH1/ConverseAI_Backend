@@ -34,11 +34,12 @@ def business_query(request):
             data = json.loads(request.body)
             business_id = data.get("business_id")
             user_query = data.get("query")
+            sender_id = data.get("sender_id")  
 
-            if not business_id or not user_query:
-                return JsonResponse({"error": "Business ID and query are required"}, status=400)
+            if not business_id or not user_query or not sender_id:
+                return JsonResponse({"error": "Business ID, query, and sender ID are required"}, status=400)
 
-            return process_business_query(business_id, user_query)
+            return process_business_query(business_id, user_query, sender_id)
 
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
