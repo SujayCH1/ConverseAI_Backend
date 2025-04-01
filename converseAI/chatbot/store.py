@@ -69,4 +69,3 @@ def add_business(business_name, business_info):
 
     except Exception as e:
         return {'status': 'error', 'message': str(e)}
-
