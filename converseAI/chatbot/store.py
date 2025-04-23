@@ -4,7 +4,7 @@ import chromadb
 import numpy as np
 import os
 from supabaseClient import supabaseInst
-from langchain.embeddings import OllamaEmbeddings  
+from langchain_community.embeddings import OllamaEmbeddings  
 
 CHROMA_DB_PATH = "D:/LLM/Langchain_proj/chroma_db"
 os.makedirs(CHROMA_DB_PATH, exist_ok=True)

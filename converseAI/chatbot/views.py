@@ -1,8 +1,13 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .store import add_business
 from .queries import process_business_query
+
+@csrf_exempt
+def home_view(request):
+    """Home page view"""
+    return HttpResponse("Welcome to ConverseAI Home Page")
 
 @csrf_exempt
 def create_business(request):

@@ -1,0 +1,6 @@
+start ollama
+start langflow
+start waitress -> 127.0.0.1:8000
+start nginx
+start cloudflar -> cloudflared.exe service install eyJhIjoiZTNlNTRjMGNmNGYyYzlhOTJkNjQ4YTZmYThlYzEzNDAiLCJ0IjoiMzEwMTUxZWEtZWU1YS00YWQwLWFiNmItZmU4ZGNmYjg4YTI0IiwicyI6IlpEQTNZV1F5TlRjdE5HSTNNUzAwWW1KakxXRXlNbVl0WkRCak16RXdaV0ZrWlRrMyJ9
+start tunnel
