@@ -6,16 +6,21 @@ import os
 from supabaseClient import supabaseInst
 from langchain_community.embeddings import OllamaEmbeddings  
 
-CHROMA_DB_PATH = "D:/LLM/Langchain_proj/chroma_db"
+CHROMA_DB_PATH = "D:/LLM/ConverseAI/chroma_db"
+
 os.makedirs(CHROMA_DB_PATH, exist_ok=True)
 client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
 
-embedding_model = OllamaEmbeddings(model="nomic-embed-text")
+embedding_model = OllamaEmbeddings(model="nomic-embed-text")    
 
 def create_chroma_collection(collection_name: str):
-    if collection_name in [col.name for col in client.list_collections()]:
-        return client.get_collection(collection_name)
-    return client.create_collection(collection_name)
+    print("Existing collections:", client.list_collections())
+    print('Collection requested:', collection_name)
+    collection = client.get_or_create_collection(name=collection_name)
+    print('Collection ID:', collection.id)
+    print('Collection actually used:', collection.name)  # Confirm actual name
+    return collection
+
 
 def embed_document(document_text: str) -> list[np.ndarray]:
     return embedding_model.embed_query(document_text)
@@ -51,7 +56,7 @@ def add_business(business_name, business_info):
         supabaseInst.table('business_documents').insert({
             'business_id': business_id,
             'document_text': business_info,
-            'collection_name': collection_name,
+            'collection_name': '4cc738a9-8fc7-46e6-a936-046b891c3546',
             'created_at': created_at 
         }).execute()
 

@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-v^=^jn$!f__uf93g%+@9$#-==vlf6itfxi047%)1y*cx$21gfq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ['https://converseai.trycloudflare.com']

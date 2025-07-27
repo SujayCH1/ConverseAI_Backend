@@ -17,6 +17,7 @@ def process_business_query(business_id, user_query, sender_id):
             return JsonResponse({"error": "Business documents not found"}, status=404)
         
         collection_name = doc_response.data[0]['collection_name']
+        print('The collection received is:', collection_name)
         
         chat_response = supabaseInst.table('chat_memory') \
             .select('*') \
