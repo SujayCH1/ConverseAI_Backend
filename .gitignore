@@ -1,9 +1,4 @@
 .env
-env
-RAG_Chatbot.ipynb
-converseAI/supabaseClient.py
-chroma_db
-converseAI/db.sqlite3
-run_gunicorn.bat
-converseAI/__pycache__
-converseAI/staticfiles
+.env.*
+!.env.example
+plan.md
