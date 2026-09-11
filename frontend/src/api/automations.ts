@@ -1,6 +1,6 @@
 import { apiRequest } from './client'
 
-type ApiResult<T = unknown> = { status: number; data?: T; res?: T }
+type ApiResult<T = unknown> = { status: number; data: T; res?: T }
 
 export const createAutomations = (id?: string) =>
   apiRequest<ApiResult>('/v1/automations', { method: 'POST', body: { id } })
@@ -42,7 +42,7 @@ export const deleteKeyword = (id: string) =>
   apiRequest<ApiResult>(`/v1/keywords/${id}`, { method: 'DELETE' })
 
 export const getProfilePosts = () =>
-  apiRequest<ApiResult<any[]>>('/v1/instagram/media')
+  apiRequest<ApiResult<{ data: any[] }>>('/v1/instagram/media')
 
 export const savePosts = (id: string, posts: unknown[]) =>
   apiRequest<ApiResult>(`/v1/automations/${id}/posts`, {

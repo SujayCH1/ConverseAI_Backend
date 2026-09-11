@@ -1,8 +1,8 @@
 "use client"
-import Link from "next/link"
+import Link from '@/components/router-link'
 import { Button } from "@/components/ui/button"
 import { Github, User } from "lucide-react"
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 
 export default function Navbar() {
   return (

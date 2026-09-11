@@ -23,7 +23,7 @@ export const Keywords = ({ id }: Props) => {
         {data?.data?.keywords &&
           data?.data?.keywords.length > 0 &&
           data?.data?.keywords.map(
-            (word) =>
+            (word: any) =>
               word.id !== latestVariable.variables.id && (
                 <div
                   className="bg-background-90 flex items-center gap-x-2 capitalize text-text-secondary py-1 px-4 rounded-full"

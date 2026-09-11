@@ -1,6 +1,6 @@
 import { SIDEBAR_MENU } from '@/constants/menu'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
+import Link from '@/components/router-link'
 import React from 'react'
 
 type Props = {

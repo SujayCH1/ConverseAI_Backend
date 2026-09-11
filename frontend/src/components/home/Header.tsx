@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from '@/components/router-link'
 import { Button } from "@/components/ui/button"
 
 export default function Header() {

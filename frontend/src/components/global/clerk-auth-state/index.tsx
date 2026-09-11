@@ -5,7 +5,7 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
-} from '@clerk/nextjs'
+} from '@clerk/clerk-react'
 import { User } from 'lucide-react'
 import Loader from '../loader'
 import { Button } from '@/components/ui/button'

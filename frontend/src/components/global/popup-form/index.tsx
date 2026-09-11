@@ -33,7 +33,7 @@ export function AnimatedModalDemo() {
       formData.append("business_info", business_info);
       
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080"}/v1/business/setup`,
+        `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/v1/business/setup`,
         { method: "POST", body: formData }
       );
 

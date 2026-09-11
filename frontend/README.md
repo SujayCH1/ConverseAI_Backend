@@ -1,6 +1,6 @@
 # ConverseAI Frontend
 
-The retained Next.js interface for ConverseAI. Backend behavior has been removed and replaced with an HTTP client boundary under `src/api`. The future Go service will implement those endpoints.
+The React and Vite interface for ConverseAI. Backend behavior has been removed and replaced with an HTTP client boundary under `src/api`. The future Go service will implement those endpoints.
 
 ## Development
 

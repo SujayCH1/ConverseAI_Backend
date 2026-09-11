@@ -11,7 +11,7 @@ type Props = {
 
 const ThenNode = ({ id }: Props) => {
   const { data } = useQueryAutomation(id)
-  const commentTrigger = data?.data?.trigger.find((t) => t.type === 'COMMENT')
+  const commentTrigger = data?.data?.trigger.find((t: any) => t.type === 'COMMENT')
 
   return !data?.data?.listener ? (
     <></>

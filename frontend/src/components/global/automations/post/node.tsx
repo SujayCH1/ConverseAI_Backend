@@ -2,7 +2,7 @@
 import { Separator } from '@/components/ui/separator'
 import { useQueryAutomation } from '@/hooks/user-queries'
 import { InstagramBlue, Warning } from '@/icons'
-import Image from 'next/image'
+import Image from '@/components/app-image'
 import React from 'react'
 
 type Props = {
@@ -34,7 +34,7 @@ const PostNode = ({ id }: Props) => {
             <p className="font-bold text-lg">These posts</p>
           </div>
           <div className="flex gap-x-2 flex-wrap mt-3">
-            {data.data.posts.map((post) => (
+            {data.data.posts.map((post: any) => (
               <div
                 key={post.id}
                 className="relative w-4/12 aspect-square rounded-lg cursor-pointer overflow-hidden"

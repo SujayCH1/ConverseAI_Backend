@@ -9,7 +9,6 @@ import {
   updateAutomationName,
 } from '@/api/automations'
 import { useMutationData } from './use-mutation-data'
-import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import useZodForm from './use-zod-form'
 import { AppDispatch, useAppSelector } from '@/redux/store'

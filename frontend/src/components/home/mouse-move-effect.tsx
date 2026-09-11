@@ -1,12 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { usePathname } from "next/navigation"
+import { useLocation } from 'react-router-dom'
 export default function MouseMoveEffect() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
 
-  const pathname = usePathname()
+  const { pathname } = useLocation()
 
 
 

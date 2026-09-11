@@ -1,11 +1,17 @@
-'use client'
-
 import * as React from 'react'
-import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
 export function ThemeProvider({
   children,
-  ...props
-}: React.ComponentProps<typeof NextThemesProvider>) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+  defaultTheme = 'dark',
+}: {
+  children: React.ReactNode
+  attribute?: string
+  defaultTheme?: 'light' | 'dark'
+  disableTransitionOnChange?: boolean
+}) {
+  React.useEffect(() => {
+    document.documentElement.classList.toggle('dark', defaultTheme === 'dark')
+  }, [defaultTheme])
+
+  return <>{children}</>
 }
