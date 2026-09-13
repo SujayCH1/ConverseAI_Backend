@@ -8,7 +8,7 @@ import Sheet from '../sheet'
 import Items from '../sidebar/items'
 import { Separator } from '@/components/ui/separator'
 import { HelpDuoToneWhite } from '@/icons'
-import { User } from 'lucide-react'
+import AuthState from '../auth-state'
 import { SubscriptionPlan } from '../subscription-plan'
 import UpgradeCard from '../sidebar/upgrade'
 import { LogoSmall } from '@/svgs/logo-small'
@@ -52,10 +52,7 @@ const InfoBar = ({ slug }: Props) => {
                   />
                 </div>
                 <div className="px-3 flex flex-col gap-y-5">
-                  <div className="flex gap-x-2">
-                    <User />
-                    <p className="text-[#9B9CA0]">Profile</p>
-                  </div>
+                  <AuthState />
                   <div className="flex gap-x-3">
                     <HelpDuoToneWhite />
                     <p className="text-[#9B9CA0]">Help</p>
