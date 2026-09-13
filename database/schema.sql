@@ -1,15 +1,54 @@
 BEGIN;
 
-CREATE EXTENSION IF NOT EXISTS vector;
+-- Supabase exposes extensions from this schema.
+CREATE EXTENSION IF NOT EXISTS vector WITH SCHEMA extensions;
 
-CREATE TABLE users (
-    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    auth_provider_id text NOT NULL UNIQUE,
-    email text NOT NULL UNIQUE,
+-- Authentication credentials and sessions are owned by Supabase Auth in
+-- auth.users. This table contains only application-facing profile data, and
+-- its primary key is the same UUID issued by Supabase Auth.
+CREATE TABLE public.users (
+    id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    email text UNIQUE,
     display_name text,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
 );
+
+-- Keep the public profile synchronized when Supabase creates or updates an
+-- authenticated user (including users created through social OAuth).
+CREATE OR REPLACE FUNCTION public.sync_auth_user_profile()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+BEGIN
+    INSERT INTO public.users (id, email, display_name, created_at, updated_at)
+    VALUES (
+        NEW.id,
+        NEW.email,
+        COALESCE(
+            NEW.raw_user_meta_data ->> 'full_name',
+            NEW.raw_user_meta_data ->> 'name',
+            NEW.raw_user_meta_data ->> 'user_name'
+        ),
+        COALESCE(NEW.created_at, now()),
+        now()
+    )
+    ON CONFLICT (id) DO UPDATE
+    SET email = EXCLUDED.email,
+        display_name = COALESCE(EXCLUDED.display_name, public.users.display_name),
+        updated_at = now();
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER sync_auth_user_profile_trigger
+    AFTER INSERT OR UPDATE OF email, raw_user_meta_data
+    ON auth.users
+    FOR EACH ROW
+    EXECUTE FUNCTION public.sync_auth_user_profile();
 
 CREATE TABLE businesses (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -101,7 +140,7 @@ CREATE TABLE knowledge_chunks (
     product_id uuid REFERENCES products(id) ON DELETE CASCADE,
     chunk_index integer NOT NULL CHECK (chunk_index >= 0),
     content text NOT NULL,
-    embedding vector,
+    embedding extensions.vector,
     metadata jsonb NOT NULL DEFAULT '{}'::jsonb,
     created_at timestamptz NOT NULL DEFAULT now(),
     CHECK (num_nonnulls(document_id, product_id) = 1)
@@ -175,5 +214,20 @@ CREATE TABLE messages (
 
 CREATE INDEX messages_conversation_sent_idx
     ON messages (conversation_id, sent_at);
+
+-- The React client will use Supabase only for authentication. Application data
+-- is accessed through the Go API, so no direct anon/authenticated policies are
+-- created here. With RLS enabled and no policies, Data API access is denied.
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.businesses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.instagram_accounts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.webhook_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.knowledge_documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.knowledge_chunks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.chatbot_configurations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.contacts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.conversations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.messages ENABLE ROW LEVEL SECURITY;
 
 COMMIT;
