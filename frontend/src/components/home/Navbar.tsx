@@ -1,8 +1,5 @@
-"use client"
 import Link from '@/components/router-link'
-import { Button } from "@/components/ui/button"
-import { Github, User } from "lucide-react"
-import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { Button } from '@/components/ui/button'
 
 export default function Navbar() {
   return (
@@ -23,27 +20,9 @@ export default function Navbar() {
           </Link>
         </nav>
         <div className="flex items-center space-x-4">
-
-          <Link href={`/dashboard`} >
-            <SignedIn>
-              <Link href="/dashboard">
-                <Button size="sm">Dashboard</Button>
-              </Link>
-            </SignedIn>
-
-            <SignedOut>
-              <Link href={`/sign-in`} >
-                <Button size="sm">Sign In</Button>
-              </Link>
-            </SignedOut>
+          <Link href="/dashboard">
+            <Button size="sm">Dashboard</Button>
           </Link>
-
-          <SignedIn>
-            <UserButton>
-              <UserButton.UserProfileLink label='Dashboard' url={`/dashboard`} 
-                labelIcon={<User size={16} />} />
-            </UserButton>
-          </SignedIn>
         </div>
       </div>
     </header>

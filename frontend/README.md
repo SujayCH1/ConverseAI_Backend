@@ -4,7 +4,7 @@ The React and Vite interface for ConverseAI. Backend behavior has been removed a
 
 ## Development
 
-1. Copy `.env.example` to `.env.local` and configure Clerk and the Go API URL.
+1. Copy `.env.example` to `.env.local` and configure the Go API URL.
 2. Install dependencies with `npm install`.
 3. Start the app with `npm run dev`.
 
