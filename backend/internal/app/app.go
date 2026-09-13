@@ -10,6 +10,7 @@ import (
 
 	"converseai/backend/internal/api"
 	"converseai/backend/internal/api/middleware"
+	"converseai/backend/internal/auth"
 	"converseai/backend/internal/database"
 	"converseai/backend/pkg/logger"
 
@@ -22,6 +23,9 @@ type Application struct {
 	// database
 	DB *pgxpool.Pool
 
+	// auth middlerware
+	AuthVerifier *auth.Verifier
+
 	// api server
 	Server *http.Server
 }
@@ -33,15 +37,32 @@ func New(ctx context.Context) (*Application, error) {
 		return nil, fmt.Errorf("DATABASE_URL is required")
 	}
 
+	// connect to db
 	pool, err := database.Open(ctx, databaseURL)
 	if err != nil {
 		return nil, fmt.Errorf("open database: %w", err)
 	}
 	logger.Logger.Info("Database connection established successfully")
 
+	// read supabase url
+	supabaseURL := os.Getenv("SUPABASE_URL")
+	if supabaseURL == "" {
+		pool.Close()
+		return nil, fmt.Errorf("SUPABASE_URL is required")
+	}
+
+	// initialize auth verifier
+	authVerifier, err := auth.NewVerifier(ctx, supabaseURL)
+	if err != nil {
+		pool.Close()
+		return nil, fmt.Errorf("create authentication verifier: %w", err)
+	}
+	logger.Logger.Info("Supabase authentication verifier initialized")
+
 	return &Application{
-		Context: ctx,
-		DB:      pool,
+		Context:      ctx,
+		DB:           pool,
+		AuthVerifier: authVerifier,
 	}, nil
 }
 
@@ -61,7 +82,7 @@ func (a *Application) Start(ctx context.Context) (startErr error) {
 	}()
 
 	// backend server setup
-	mux := api.NewRouter()
+	mux := api.NewRouter(a.AuthVerifier)
 	frontendURL := os.Getenv("FRONTEND_URL")
 	if frontendURL == "" {
 		frontendURL = "http://localhost:3000"

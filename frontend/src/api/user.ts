@@ -4,7 +4,7 @@ type ApiResult<T = any> = { status: number; data?: T }
 
 export const onBoardUser = () => apiRequest<ApiResult>('/v1/me/bootstrap', { method: 'POST' })
 export const onBoardUsername = () => apiRequest<ApiResult>('/v1/me')
-export const onUserInfo = () => apiRequest<ApiResult>('/v1/me')
+export const onUserInfo = () => apiRequest<ApiResult>('/v1/auth/me')
 export const userFormStatus = () => apiRequest<ApiResult>('/v1/me/setup-status')
 
 export const onSubscribe = (sessionId: string) =>
